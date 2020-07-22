@@ -3,6 +3,9 @@ as a goal. Hopefully I should be able to create a functioning model at the
 end of this. 19 July 2020 '''
 #Initializing our blockchain list
 blockchain = []
+open_transactions = []
+owner = 'Akshay'
+
 
 def get_last_value():
     #returns the last value of the blockchain
@@ -10,23 +13,30 @@ def get_last_value():
         return None
     return blockchain[-1]
 
-def add_value(transaction_amount , last_transaction=[1]):
+def add_value(sender, recipient, amount = 1.0):
     '''Appends the new transaction amount to the blockchain as well as add
     the previous transactions
 
-    transaction_amount: amount being transferred. User input
-    last_transaction: the last transaction, with a default value of
-    1, incase it's the first transaction in the blockchain
+    Sender: Sender of coins
+    Receiver: Receiver of coins
+    Amount: Total coins sent
     '''
-    if get_last_value() == None:
-        last_transaction = [1]
-    blockchain.append([last_transaction,transaction_amount])
-    print(blockchain)
+    transaction = {
+                    'sender' : sender,
+                    'recipient': recipient
+                    'amound' : amount
+    }
+    open_transactions.append(transaction)
+
+
+def mine_block():
+    pass
 
 def get_transaction_value():
     '''User inputs the amount of cryptocurrency to transfer'''
-    tx_amount = float(input('Amount of Lightnings to trasnfer: '))
-    return tx_amount
+    tx_recipient = input('Enter the recipient of the transaction:)
+    user_input = float(input('Amount of Lightnings to trasnfer: '))
+    return tx_recipient, tx_amount
 
 def verify_chain(): #Used to verify that the chain has not been tampered with
     is_valid = True
@@ -75,9 +85,9 @@ while wait_input:
     print("4.Manipulate")
     user_choice = get_user_choice()
 
-    if user_choice == '1':
-        tx_amount = get_transaction_value()
-        add_value(tx_amount, get_last_value())
+    if user_choice == '1':      //To be fixed
+        tx_data = get_transaction_value()
+        add_value(tx_data, get_last_value())
 
     elif user_choice == '2':
         display_blockchain()
