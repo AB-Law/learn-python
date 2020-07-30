@@ -2,6 +2,11 @@
 as a goal. Hopefully I should be able to create a functioning model at the
 end of this. 31 July 2020 '''
 #Initializing our blockchain list
+genesis_block = {
+    'previous_hash': '',
+    'index': 0,
+    'transactions': []
+  }
 blockchain = []
 open_transactions = []
 owner = 'Akshay'
@@ -30,7 +35,13 @@ def add_value(recipient, sender=owner, amount = 1.0):
 
 
 def mine_block():
-    pass
+    last_block = blockchain[-1]
+    block = {
+        'previous_hash': '',
+        'index': len(blockchain),
+        'transactions': open_transactions
+      }
+    blockchain.append(block)
 
 def get_transaction_value():
     '''User inputs the amount of cryptocurrency to transfer'''
