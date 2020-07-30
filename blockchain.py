@@ -1,6 +1,6 @@
 '''The start of the project to learn python and create a blockchain, sort of
 as a goal. Hopefully I should be able to create a functioning model at the
-end of this. 19 July 2020 '''
+end of this. 31 July 2020 '''
 #Initializing our blockchain list
 blockchain = []
 open_transactions = []
@@ -13,7 +13,7 @@ def get_last_value():
         return None
     return blockchain[-1]
 
-def add_value(sender, recipient, amount = 1.0):
+def add_value(recipient, sender=owner, amount = 1.0):
     '''Appends the new transaction amount to the blockchain as well as add
     the previous transactions
 
@@ -23,8 +23,8 @@ def add_value(sender, recipient, amount = 1.0):
     '''
     transaction = {
                     'sender' : sender,
-                    'recipient': recipient
-                    'amound' : amount
+                    'recipient': recipient,
+                    'amount' : amount
     }
     open_transactions.append(transaction)
 
@@ -34,8 +34,8 @@ def mine_block():
 
 def get_transaction_value():
     '''User inputs the amount of cryptocurrency to transfer'''
-    tx_recipient = input('Enter the recipient of the transaction:)
-    user_input = float(input('Amount of Lightnings to trasnfer: '))
+    tx_recipient = input('Enter the recipient of the transaction: ')
+    tx_amount = float(input('Amount of Lightnings to trasnfer: '))
     return tx_recipient, tx_amount
 
 def verify_chain(): #Used to verify that the chain has not been tampered with
@@ -44,15 +44,13 @@ def verify_chain(): #Used to verify that the chain has not been tampered with
         #checking to see if it is the first element
         if block_index == 0:
             continue
-
-'''Blockchain[block_index] gives us the list of the current index
-, and we check the first element which should be the list
-of the last chain, ie blockchain[block_index-1].
-eg.
-to check [[[1],2],3] with [[1],2]
-so we check the first element of the currnt indext and compare
-with the previous one
-     '''
+    #Blockchain[block_index] gives us the list of the current index
+    #, and we check the first element which should be the list
+    #of the last chain, ie blockchain[block_index-1].
+    #eg.
+    #to check [[[1],2],3] with [[1],2]
+    #so we check the first element of the currnt indext and compare
+    #with the previous one
 
         elif blockchain[block_index][0] == blockchain[block_index-1]:
             is_valid = True
@@ -85,9 +83,11 @@ while wait_input:
     print("4.Manipulate")
     user_choice = get_user_choice()
 
-    if user_choice == '1':      //To be fixed
+    if user_choice == '1':      #To be fixed
         tx_data = get_transaction_value()
-        add_value(tx_data, get_last_value())
+        recipient, amount = tx_data
+        add_value(recipient, amount= amount)
+        print(open_transactions)
 
     elif user_choice == '2':
         display_blockchain()
